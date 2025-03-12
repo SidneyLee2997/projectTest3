@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}{{ course.title }} - 数学学习平台{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">{{ course.title }}</h1>
+    <p class="lead mb-4">{{ course.description }}</p>
+
+    <!-- 调试信息 -->
+    {% if chapters %}
+    <p class="text-muted">找到 {{ chapters|length }} 个章节</p>
+    {% else %}
+    <p class="text-muted">暂无章节</p>
+    {% endif %}
+
+    <div class="chapters">
+        {% for chapter in chapters %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ chapter.title }}</h5>
+                <div class="chapter-content markdown-body">
+                    {{ chapter.content | safe }}
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            暂无课程内容
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- 引入KaTeX -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+<!-- 引入Markdown样式 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css">
+
+<!-- 引入marked.js用于解析Markdown -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("页面加载完成，开始处理内容");
+    
+    // 渲染数学公式
+    renderMathInElement(document.body, {
+        delimiters: [
+            {left: "\\[", right: "\\]", display: true},
+            {left: "\\(", right: "\\)", display: false}
+        ],
+        throwOnError: false
+    });
+
+    // 渲染Markdown内容
+    document.querySelectorAll('.chapter-content').forEach(function(element) {
+        console.log("处理章节内容:", element.textContent.substring(0, 50) + "...");
+        element.innerHTML = marked.parse(element.textContent);
+    });
+});
+</script>
+
+<style>
+.markdown-body {
+    box-sizing: border-box;
+    min-width: 200px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 45px;
+}
+
+@media (max-width: 767px) {
+    .markdown-body {
+        padding: 15px;
+    }
+}
+
+.katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 1em 0;
+}
+</style>
+{% endblock %} 

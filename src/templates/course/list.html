@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}课程列表 - 数学学习平台{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">
+        {% if category == 'linear-algebra' %}
+        线性代数课程
+        {% endif %}
+    </h1>
+
+    <div class="row">
+        {% for course in courses %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.title }}</h5>
+                    <p class="card-text">{{ course.description }}</p>
+                    <a href="{{ url_for('course.linear_algebra') }}" class="btn btn-primary">开始学习</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 

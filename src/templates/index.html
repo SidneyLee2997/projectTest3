@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}首页 - 数学学习平台{% endblock %}
+
+{% block content %}
+<div class="jumbotron bg-light p-5 rounded">
+    <h1 class="display-4">欢迎来到数学学习平台</h1>
+    <p class="lead">这里提供线性代数、高等数学和概率论的在线学习资源。</p>
+    <hr class="my-4">
+    <p>选择你感兴趣的课程开始学习吧！</p>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">线性代数</h5>
+                <p class="card-text">学习矩阵、向量空间、线性变换等基础知识。</p>
+                <a href="{{ url_for('course.list_courses', category='linear-algebra') }}" class="btn btn-primary">开始学习</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">高等数学</h5>
+                <p class="card-text">探索微积分、级数、微分方程等进阶内容。</p>
+                <a href="{{ url_for('course.list_courses', category='calculus') }}" class="btn btn-primary">开始学习</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">概率论</h5>
+                <p class="card-text">掌握概率分布、随机变量、大数定律等概念。</p>
+                <a href="{{ url_for('course.list_courses', category='probability') }}" class="btn btn-primary">开始学习</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if courses %}
+<div class="mt-5">
+    <h2>最新课程</h2>
+    <div class="row">
+        {% for course in courses %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.title }}</h5>
+                    <p class="card-text">{{ course.description }}</p>
+                    <a href="{{ url_for('course.view_course', course_id=course.id) }}" class="btn btn-outline-primary">查看详情</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %} 

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}{{ chapter.title }} - 数学学习平台{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('course.list_courses', category=chapter.course.category) }}">{{ chapter.course.category }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('course.view_course', course_id=chapter.course.id) }}">{{ chapter.course.title }}</a></li>
+            <li class="breadcrumb-item active">{{ chapter.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-9">
+            <article class="content">
+                <h1 class="mb-4">{{ chapter.title }}</h1>
+                <div class="chapter-content">
+                    {{ chapter.content|safe }}
+                </div>
+            </article>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">章节导航</h5>
+                    <div class="list-group">
+                        {% for ch in chapter.course.chapters %}
+                        <a href="{{ url_for('course.view_chapter', chapter_id=ch.id) }}" 
+                           class="list-group-item list-group-item-action {% if ch.id == chapter.id %}active{% endif %}">
+                            {{ ch.title }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.chapter-content {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.chapter-content h2 {
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+}
+
+.chapter-content p {
+    margin-bottom: 1em;
+}
+
+.chapter-content .math {
+    overflow-x: auto;
+    margin: 1em 0;
+}
+</style>
+{% endblock %} 

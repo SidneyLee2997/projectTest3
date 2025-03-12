@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}个人中心 - 数学学习平台{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">个人信息</h5>
+                    <p class="card-text">
+                        <strong>用户名：</strong>{{ current_user.username }}<br>
+                        <strong>邮箱：</strong>{{ current_user.email }}<br>
+                        <strong>注册时间：</strong>{{ current_user.created_at.strftime('%Y-%m-%d') }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">学习进度</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        学习进度跟踪功能正在开发中，敬请期待！
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}{{ chapter.title }} - {{ chapter.course.title }} - 数学学习平台{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.15.3/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.15.3/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.15.3/contrib/auto-render.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\(", right: "\\)", display: false}
+            ]
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- 章节内容 -->
+        <div class="col-md-9">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('course.linear_algebra') }}">{{ chapter.course.title }}</a></li>
+                    <li class="breadcrumb-item active">{{ chapter.title }}</li>
+                </ol>
+            </nav>
+
+            <div class="card">
+                <div class="card-body chapter-content">
+                    {{ chapter.content|safe }}
+                </div>
+            </div>
+        </div>
+
+        <!-- 章节导航 -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">章节导航</h5>
+                    <div class="list-group">
+                        {% for ch in chapter.course.chapters %}
+                        <a href="{{ url_for('course.chapter_detail', chapter_id=ch.id) }}" 
+                           class="list-group-item list-group-item-action {% if ch.id == chapter.id %}active{% endif %}">
+                            {{ ch.title }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.chapter-content {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.chapter-content h1 {
+    margin-bottom: 1.5rem;
+}
+
+.chapter-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.chapter-content h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.katex-display {
+    margin: 2rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+</style>
+{% endblock %} 

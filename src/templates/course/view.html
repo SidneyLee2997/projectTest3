@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}{{ course.title }} - 数学学习平台{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('course.list_courses', category=course.category) }}">{{ course.category }}</a></li>
+            <li class="breadcrumb-item active">{{ course.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="mb-4">{{ course.title }}</h1>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">课程简介</h5>
+                    <p class="card-text">{{ course.description }}</p>
+                </div>
+            </div>
+
+            {% if chapters %}
+            <div class="list-group">
+                {% for chapter in chapters %}
+                <a href="{{ url_for('course.view_chapter', chapter_id=chapter.id) }}" 
+                   class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ chapter.title }}</h5>
+                        <small>第 {{ chapter.order }} 章</small>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                课程内容正在编写中，敬请期待！
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">课程信息</h5>
+                    <p class="card-text">
+                        <strong>分类：</strong>{{ course.category }}<br>
+                        <strong>章节数：</strong>{{ chapters|length }}<br>
+                        <strong>创建时间：</strong>{{ course.created_at.strftime('%Y-%m-%d') }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
