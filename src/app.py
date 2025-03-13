@@ -1,39 +1,51 @@
 """
 主应用文件
 """
+import logging
 from flask import Flask, render_template
 from config import Config
-from extensions import db, login_manager
-from routes import main_bp, auth_bp
+from models import db
 from routes.course import course_bp
-from flask_wtf.csrf import CSRFProtect
 
 def create_app(config_class=Config):
     app = Flask(__name__)
+    
+    # 配置日志
+    logging.basicConfig(level=logging.INFO)
+    app.logger.setLevel(logging.INFO)
+    
+    # 加载配置
     app.config.from_object(config_class)
 
-    # 初始化扩展
+    # 初始化数据库
     db.init_app(app)
-    login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'
-    CSRFProtect(app)
 
     # 注册蓝图
-    app.register_blueprint(main_bp)
-    app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(course_bp, url_prefix='/course')
 
     # 创建数据库表
     with app.app_context():
-        db.create_all()
+        try:
+            db.create_all()
+            app.logger.info('数据库表已创建')
+        except Exception as e:
+            app.logger.error(f'创建数据库表时出错: {str(e)}')
+
+    # 首页路由
+    @app.route('/')
+    def index():
+        app.logger.info('访问网站首页')
+        return render_template('index.html')
 
     # 注册错误处理
     @app.errorhandler(404)
     def page_not_found(e):
+        app.logger.error(f'页面未找到: {str(e)}')
         return render_template('errors/404.html'), 404
 
     @app.errorhandler(500)
     def internal_server_error(e):
+        app.logger.error(f'服务器内部错误: {str(e)}')
         return render_template('errors/500.html'), 500
 
     return app

@@ -3,42 +3,52 @@
 """
 import os
 import sys
+import logging
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from flask import Flask
 from config import Config
 from models import db, Course, Chapter
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+    # 打印数据库路径
+    logger.info(f"数据库路径: {app.config['SQLALCHEMY_DATABASE_URI']}")
     db.init_app(app)
     return app
 
 def init_database(app):
     """创建数据库表"""
     with app.app_context():
+        # 确保instance文件夹存在
+        os.makedirs('instance', exist_ok=True)
         db.drop_all()  # 删除所有表
         db.create_all()  # 重新创建表
-        print("数据库表创建完成！")
+        logger.info("数据库表创建完成！")
 
 def init_linear_algebra(app):
     """初始化线性代数课程"""
     with app.app_context():
-        # 创建线性代数课程
-        course = Course(
-            title='线性代数基础',
-            description='本课程涵盖线性代数的基本概念和应用，包括矩阵运算、向量空间、线性变换等内容。通过本课程的学习，你将掌握解决实际问题所需的线性代数知识。',
-            category='linear-algebra'
-        )
-        db.session.add(course)
-        db.session.flush()  # 获取course.id
-
-        # 创建章节
-        chapters = [
-            {
-                'title': '第1章 矩阵基础',
-                'content': '''
+        try:
+            # 创建线性代数课程
+            course = Course(
+                title='线性代数基础',
+                description='本课程涵盖线性代数的基本概念和应用，包括矩阵运算、向量空间、线性变换等内容。通过本课程的学习，你将掌握解决实际问题所需的线性代数知识。',
+                category='linear-algebra'
+            )
+            db.session.add(course)
+            db.session.flush()  # 获取course.id
+            logger.info(f"创建课程: {course.title}")
+            
+            # 创建章节
+            chapters = [
+                {
+                    'title': '第1章 矩阵基础',
+                    'content': '''
 # 矩阵基础
 
 ## 1.1 矩阵的概念与表示
@@ -147,11 +157,12 @@ A^T = \\begin{pmatrix}
 \\end{pmatrix}
 \\]
 ''',
-                'order': 1
-            },
-            {
-                'title': '第2章 行列式',
-                'content': '''
+                    'order': 1,
+                    'course_id': course.id
+                },
+                {
+                    'title': '第2章 行列式',
+                    'content': '''
 # 行列式
 
 ## 2.1 行列式的概念
@@ -236,11 +247,12 @@ c & d
 ### 判断矩阵是否可逆
 矩阵可逆的充要条件是其行列式不等于0。
 ''',
-                'order': 2
-            },
-            {
-                'title': '第3章 向量空间',
-                'content': '''
+                    'order': 2,
+                    'course_id': course.id
+                },
+                {
+                    'title': '第3章 向量空间',
+                    'content': '''
 # 向量空间
 
 ## 3.1 向量的基本概念
@@ -312,11 +324,12 @@ c_1\\vec{v_1} + c_2\\vec{v_2} + ... + c_n\\vec{v_n} = \\vec{0}
 ### 线性无关
 如果仅当所有系数都为零时，上述等式才成立，则称向量组线性无关。
 ''',
-                'order': 3
-            },
-            {
-                'title': '第4章 线性变换',
-                'content': '''
+                    'order': 3,
+                    'course_id': course.id
+                },
+                {
+                    'title': '第4章 线性变换',
+                    'content': '''
 # 线性变换
 
 ## 4.1 线性变换的定义
@@ -400,21 +413,22 @@ A = PDP^{-1}
 2. 解耦联系统
 3. 简化计算
 ''',
-                'order': 4
-            }
-        ]
-
-        for chapter_data in chapters:
-            chapter = Chapter(
-                title=chapter_data['title'],
-                content=chapter_data['content'],
-                order=chapter_data['order'],
-                course_id=course.id
-            )
-            db.session.add(chapter)
-
-        db.session.commit()
-        print("线性代数课程初始化完成！")
+                    'order': 4,
+                    'course_id': course.id
+                }
+            ]
+            
+            for chapter in chapters:
+                db.session.add(Chapter(**chapter))
+                logger.info(f"创建章节: {chapter['title']}")
+            
+            db.session.commit()
+            logger.info("线性代数课程初始化完成！")
+            
+        except Exception as e:
+            db.session.rollback()
+            logger.error(f"初始化过程中出错: {str(e)}")
+            raise
 
 if __name__ == '__main__':
     app = create_app()

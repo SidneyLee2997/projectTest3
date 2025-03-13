@@ -26,7 +26,7 @@
         </div>
         {% else %}
         <div class="alert alert-info">
-            暂无课程内容
+            暂无章节内容
         </div>
         {% endfor %}
     </div>
@@ -47,6 +47,12 @@
 document.addEventListener("DOMContentLoaded", function() {
     console.log("页面加载完成，开始处理内容");
     
+    // 渲染Markdown内容
+    document.querySelectorAll('.chapter-content').forEach(function(element) {
+        console.log("处理章节内容:", element.textContent.substring(0, 50) + "...");
+        element.innerHTML = marked.parse(element.textContent);
+    });
+
     // 渲染数学公式
     renderMathInElement(document.body, {
         delimiters: [
@@ -54,12 +60,6 @@ document.addEventListener("DOMContentLoaded", function() {
             {left: "\\(", right: "\\)", display: false}
         ],
         throwOnError: false
-    });
-
-    // 渲染Markdown内容
-    document.querySelectorAll('.chapter-content').forEach(function(element) {
-        console.log("处理章节内容:", element.textContent.substring(0, 50) + "...");
-        element.innerHTML = marked.parse(element.textContent);
     });
 });
 </script>
