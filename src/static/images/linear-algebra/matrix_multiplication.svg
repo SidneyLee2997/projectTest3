@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="700" height="300" xmlns="http://www.w3.org/2000/svg">
+    <!-- 第一个矩阵 -->
+    <rect x="50" y="50" width="150" height="150" fill="none" stroke="black" stroke-width="2"/>
+    <text x="125" y="30" font-size="20" text-anchor="middle">A</text>
+    <text x="85" y="105" font-size="24" text-anchor="middle" fill="red">1</text>
+    <text x="165" y="105" font-size="24" text-anchor="middle" fill="red">2</text>
+    <text x="85" y="165" font-size="24" text-anchor="middle" fill="red">3</text>
+    <text x="165" y="165" font-size="24" text-anchor="middle" fill="red">4</text>
+    
+    <!-- 乘号 -->
+    <text x="250" y="135" font-size="40" text-anchor="middle">×</text>
+    
+    <!-- 第二个矩阵 -->
+    <rect x="300" y="50" width="150" height="150" fill="none" stroke="black" stroke-width="2"/>
+    <text x="375" y="30" font-size="20" text-anchor="middle">B</text>
+    <text x="335" y="105" font-size="24" text-anchor="middle" fill="blue">2</text>
+    <text x="415" y="105" font-size="24" text-anchor="middle" fill="blue">0</text>
+    <text x="335" y="165" font-size="24" text-anchor="middle" fill="blue">1</text>
+    <text x="415" y="165" font-size="24" text-anchor="middle" fill="blue">3</text>
+    
+    <!-- 等号 -->
+    <text x="500" y="135" font-size="40" text-anchor="middle">=</text>
+    
+    <!-- 结果矩阵 -->
+    <rect x="550" y="50" width="150" height="150" fill="none" stroke="black" stroke-width="2"/>
+    <text x="625" y="30" font-size="20" text-anchor="middle">A × B</text>
+    <text x="585" y="105" font-size="24" text-anchor="middle" fill="purple">4</text>
+    <text x="665" y="105" font-size="24" text-anchor="middle" fill="purple">6</text>
+    <text x="585" y="165" font-size="24" text-anchor="middle" fill="purple">10</text>
+    <text x="665" y="165" font-size="24" text-anchor="middle" fill="purple">12</text>
+</svg> 

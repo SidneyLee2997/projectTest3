@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>矩阵计算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .matrix-input {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            gap: 5px;
+            margin: 20px 0;
+        }
+        input {
+            width: 50px;
+            height: 30px;
+            text-align: center;
+        }
+        button {
+            margin: 10px;
+            padding: 5px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h2>2x2矩阵计算器</h2>
+    
+    <div>
+        <h3>矩阵 A</h3>
+        <div class="matrix-input" id="matrixA">
+            <input type="number" value="1">
+            <input type="number" value="0">
+            <input type="number" value="0">
+            <input type="number" value="1">
+        </div>
+
+        <h3>矩阵 B</h3>
+        <div class="matrix-input" id="matrixB">
+            <input type="number" value="2">
+            <input type="number" value="1">
+            <input type="number" value="1">
+            <input type="number" value="2">
+        </div>
+
+        <button onclick="multiply()">计算 A × B</button>
+        <button onclick="add()">计算 A + B</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function getMatrix(id) {
+            const inputs = document.querySelectorAll(`#${id} input`);
+            return [
+                [parseFloat(inputs[0].value), parseFloat(inputs[1].value)],
+                [parseFloat(inputs[2].value), parseFloat(inputs[3].value)]
+            ];
+        }
+
+        function multiply() {
+            const A = getMatrix('matrixA');
+            const B = getMatrix('matrixB');
+            
+            const result = [
+                [A[0][0]*B[0][0] + A[0][1]*B[1][0], A[0][0]*B[0][1] + A[0][1]*B[1][1]],
+                [A[1][0]*B[0][0] + A[1][1]*B[1][0], A[1][0]*B[0][1] + A[1][1]*B[1][1]]
+            ];
+            
+            displayResult(result, '矩阵乘法结果 (A × B)：');
+        }
+
+        function add() {
+            const A = getMatrix('matrixA');
+            const B = getMatrix('matrixB');
+            
+            const result = [
+                [A[0][0] + B[0][0], A[0][1] + B[0][1]],
+                [A[1][0] + B[1][0], A[1][1] + B[1][1]]
+            ];
+            
+            displayResult(result, '矩阵加法结果 (A + B)：');
+        }
+
+        function displayResult(matrix, title) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h4>${title}</h4>
+                <div style="font-family: monospace; white-space: pre;">
+                    [${matrix[0][0].toFixed(2)} ${matrix[0][1].toFixed(2)}]
+                    [${matrix[1][0].toFixed(2)} ${matrix[1][1].toFixed(2)}]
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html> 

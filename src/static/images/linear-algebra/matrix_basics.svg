@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+    <!-- 矩阵边框 -->
+    <rect x="100" y="50" width="200" height="200" fill="none" stroke="black" stroke-width="2"/>
+    
+    <!-- 网格线 -->
+    <line x1="100" y1="125" x2="300" y2="125" stroke="gray" stroke-width="1"/>
+    <line x1="100" y1="175" x2="300" y2="175" stroke="gray" stroke-width="1"/>
+    <line x1="166" y1="50" x2="166" y2="250" stroke="gray" stroke-width="1"/>
+    <line x1="233" y1="50" x2="233" y2="250" stroke="gray" stroke-width="1"/>
+    
+    <!-- 矩阵元素 -->
+    <text x="133" y="100" font-size="24" text-anchor="middle">1</text>
+    <text x="200" y="100" font-size="24" text-anchor="middle">2</text>
+    <text x="266" y="100" font-size="24" text-anchor="middle">3</text>
+    <text x="133" y="150" font-size="24" text-anchor="middle">4</text>
+    <text x="200" y="150" font-size="24" text-anchor="middle">5</text>
+    <text x="266" y="150" font-size="24" text-anchor="middle">6</text>
+    <text x="133" y="200" font-size="24" text-anchor="middle">7</text>
+    <text x="200" y="200" font-size="24" text-anchor="middle">8</text>
+    <text x="266" y="200" font-size="24" text-anchor="middle">9</text>
+    
+    <!-- 标题 -->
+    <text x="200" y="30" font-size="20" text-anchor="middle">3x3 矩阵示例</text>
+</svg> 

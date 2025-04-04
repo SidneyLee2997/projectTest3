@@ -2,13 +2,16 @@
 主应用文件
 """
 import logging
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
+import os
 from config import Config
 from models import db
 from routes.course import course_bp
 
 def create_app(config_class=Config):
-    app = Flask(__name__)
+    app = Flask(__name__, 
+                static_url_path='/static',
+                static_folder='static')
     
     # 配置日志
     logging.basicConfig(level=logging.INFO)

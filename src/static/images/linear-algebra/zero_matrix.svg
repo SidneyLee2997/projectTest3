@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+    <!-- 矩阵边框 -->
+    <rect x="100" y="50" width="200" height="200" fill="none" stroke="black" stroke-width="2"/>
+    
+    <!-- 网格线 -->
+    <line x1="100" y1="150" x2="300" y2="150" stroke="gray" stroke-width="1"/>
+    <line x1="200" y1="50" x2="200" y2="250" stroke="gray" stroke-width="1"/>
+    
+    <!-- 矩阵元素 -->
+    <text x="150" y="115" font-size="24" text-anchor="middle">0</text>
+    <text x="250" y="115" font-size="24" text-anchor="middle">0</text>
+    <text x="150" y="215" font-size="24" text-anchor="middle">0</text>
+    <text x="250" y="215" font-size="24" text-anchor="middle">0</text>
+    
+    <!-- 标题 -->
+    <text x="200" y="30" font-size="20" text-anchor="middle">零矩阵</text>
+</svg> 
